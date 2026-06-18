@@ -1223,7 +1223,7 @@ function s:DrawIO(io_seqs,io_list,chg_io_names,tcmt_names)
         if type != 'keep' 
             let name = value[5]
             let width = value[8]
-            let connect = name.width
+            let connect = substitute(name, '_\([io]\)$', '', '') . width
             "io that's changed will be keeped if config 
             if g:atv_autoinst_keep_chg == 1
                 if(has_key(chg_io_names,name))
@@ -1294,7 +1294,7 @@ function s:DrawIO(io_seqs,io_list,chg_io_names,tcmt_names)
             let width = value[8]
 
             "io that's changed will be keeped if config 
-            let connect = name.width
+            let connect = substitute(name, '_\([io]\)$', '', '') . width
             if g:atv_autoinst_keep_chg == 1
                 if(has_key(chg_io_names,name))
                     let connect = chg_io_names[name]
