@@ -936,7 +936,7 @@ let g:atv_autopara_tail_nalign = 1
 
 ---
 
-> 使用`AutoInst`、`AutoPara`、`AutoParaValue`、`AutoWire`、`AutoDef`、`RtlTree`等功能时，可能例化的模块不在当前文件夹下，而在上一层或下一层文件夹的某个位置，此时需要进行配置
+> 使用`AutoInst`、`AutoPara`、`AutoParaValue`、`AutoWire`、`AutoDef`等功能时，可能例化的模块不在当前文件夹下，而在上一层或下一层文件夹的某个位置，此时需要进行配置
 
 跨文件夹可以通过三种方式进行设置：`verilog-library`(默认，仿`verilog-mode`)、`filelist`、`tags`。
 
@@ -978,7 +978,7 @@ let g:atv_crossdir_mode = 2    "0:normal 1:filelist 2:tags
      >
      > 如果不配置跨文件夹的选项，默认会以打开`vim`的位置作为搜索顶层往下**递归**搜索相关`.v`或`.sv`文件。
   >
-     > 注意不要在`桌面`或者`盘符根目录`等位置打开文件并使用脚本，否则搜索可能会卡死。（暂时不考虑修复为自动切换地址到文件位置，因为与`RtlTree`部分功能冲突）
+     > 注意不要在`桌面`或者`盘符根目录`等位置打开文件并使用脚本，否则搜索可能会卡死。
 
      ![CrossDir](https://cdn-1301954091.cos.ap-chengdu.myqcloud.com/blog/vimscript-automatic/cross_dir.gif)
 
@@ -1203,87 +1203,4 @@ let g:atv_crossdir_mode = 2    "0:normal 1:filelist 2:tags
    
    </details>
 
-
-## 树状拓扑-RtlTree
-
----
-
-> 通过`Rtl`树观察代码结构
-
-⚠️注意：此功能可能存在`BUG`，请及时反馈
-
-![callout_rtl](https://cdn-1301954091.cos.ap-chengdu.myqcloud.com/blog/vimscript-automatic/callout_rtl.gif)
-
-### 操作步骤
-
-1. 打开`Rtl`
-
-   命令行输入`RtlTree`（或直接使用缩略的`Rtl`）确认即可
-
-   ```javascript
-   :RtlTree
-   ```
-
-   `RtlTree`默认以当前模块为顶层模块开始进行树图生成，如果想自定义顶层文件，可以自行加上文件名（如果在当前文件夹，可用`tab`在命令行自动补全）
-
-   ```javascript
-   RtlTree top.v
-   ```
-
-   ```
-   RtlTree ../src/top.v
-   ```
-
-   ⚠️需要注意的是，当前版本的`跨文件夹`如果使用`verilog-library`设置（默认），则必须从当前打开的文件进行树图展开，否则无法找到跨文件夹的文件。如果使用`filelist`和`tag`则不受此影响。
-
-2. 跳转
-
-   - 鼠标操作
-
-     单击跳转至例化位置
-
-     双击跳转至模块内部（如果文件存在），同时展开其子模块（如果子模块文件存在）
-
-     `+`代表可以展开，`~`代表无法展开，`unresolved`代表子模块对应文件不存在（即跨文件夹未搜索到）
-
-     ![mouse](https://cdn-1301954091.cos.ap-chengdu.myqcloud.com/blog/vimscript-automatic/mouse.gif)
-
-   - 键盘操作
-
-     在`~`，`+`位置按`<CR>`，也就是`<Enter>`，进行子模块展开/收缩
-
-     按`o`，打开对应模块
-
-     按`i`，打开对应模块例化位置
-
-     按`q`，关闭`RtlTree`
-
-     按`r`，更新`RtlTree`（适用于在过程中新增/删除文件，新增/删除模块的时候。注意更新之后需要手动收缩/展开一次相应模块的位置才能展现效果）
-
-     按`?`，打开或关闭帮助信息
-
-     ![fastkey](https://cdn-1301954091.cos.ap-chengdu.myqcloud.com/blog/vimscript-automatic/fastkey.gif)
-
-     键盘相关操作可以配置为其他按键：
-
-     - 打开对应模块：`g:atv_rtl_open`
-     - 打开对应模块例化位置：`g:atv_rtl_inst`
-     - 关闭`RtlTree`：`g:atv_rtl_quit`
-     - 更新`RtlTree`：`g:atv_rtl_refresh`
-
-     例如配置通过`d`键打开对应模块：
-
-     ```javascript
-     let g:atv_rtl_open = "d"
-     ```
-
-### 递归搜索
-
-默认建立`Rtl`树时不会搜索整个代码结构，只会搜索当前模块下的例化模块结构。如果希望递归搜索所有代码结构，请打开如下配置：
-
-```javascript
-let g:atv_rtl_recursive = 1
-```
-
-另外，更新`RtlTree`时，总会自动进行递归调用。
 

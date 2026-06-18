@@ -28,10 +28,6 @@
 - **AutoWire**-自动线网
 - **AutoDef**-自动定义
 
-### Rtl树
-
-- 通过`RtlTree`浏览`Rtl`结构
-
 ### 缺点
 
 - 纯移植，未知`Bug`多

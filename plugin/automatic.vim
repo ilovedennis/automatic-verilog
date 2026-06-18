@@ -4,9 +4,8 @@
 " Website:        https://honk.wang
 " Last Modified:  2022/09/04 00:06
 " File:           automatic.vim
-" Note:           1. Auto function based on zhangguo's vimscript, heavily modified
-"                 2. Rtl Tree based on zhangguo's vimscript, slightly modified
-"                    https://www.vim.org/scripts/script.php?script_id=4067 
+" Note:           Auto function based on zhangguo's vimscript, heavily modified
+"                 https://www.vim.org/scripts/script.php?script_id=4067 
 "------------------------------------------------------------------------------
 " Modification History:
 " Date          By              Version                 Change Description
@@ -15,7 +14,6 @@
 " 2021/4/5      HonkW           1.0.1                   Finish AutoInst & Autopara
 " 2021/5/28     HonkW           1.1.0                   Optimize AutoInst & AutoPara
 " 2021/6/12     HonkW           1.1.2                   Prototype of AutoReg
-" 2021/8/1      HonkW           1.1.6                   Add modified verision of RtlTree
 " 2021/9/14     HonkW           1.2.4                   Prototype of AutoDef
 " 2021/11/20    HonkW           1.2.5                   Prototype of AutoArg
 " 2022/2/15     HonkW           1.2.6                   Prototype of filelist & tags support

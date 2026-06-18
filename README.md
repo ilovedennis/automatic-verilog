@@ -51,10 +51,6 @@ Plugin 'HonkW93/automatic-verilog'
 - 自动定义（`AutoDef`） 
 - 自动声明（`AutoArg`）
 
-### 2.4 Rtl 树
-
-- 通过`RtlTree`浏览`Rtl`结构
-
 ## 3. 演示
 
 ### 3.1 AutoInst
@@ -84,10 +80,6 @@ Plugin 'HonkW93/automatic-verilog'
 ### 3.7 AutoArg
 
 ![autoarg](https://cdn.jsdelivr.net/gh/HonkW93/automatic-verilog@master/demo/autoarg.gif)
-
-### 3.8 RtlTree
-
-![rtl](https://cdn.jsdelivr.net/gh/HonkW93/automatic-verilog@master/demo/rtl.gif)
 
 ## 4. 文档
 

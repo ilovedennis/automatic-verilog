@@ -66,21 +66,6 @@
 
    `AutoWire`及`AutoDef`运行时会获取相关的所有例化模块，其运行速度可能较慢
 
-## RtlTree？
-
-1. 顶层文件位置？
-
-   `RtlTree`以当前模块为顶层模块开始进行树图生成，如果想置顶文件位置，可以自行加上文件名（如果在当前文件夹，可用`tab`在命令行自动补全）
-
-   ```javascript
-   RtlTree top.v
-   ```
-
-2. 乱跳转？窗口切换混乱？其他异常`bug`?
-
-   可以[留言](https://blog.honk.wang/posts/AutoMatic#post-comment)，我会尽量修复
-   
-
 ## 代码对齐？
 
 1. `AutoArg`生成的代码多少字符换行的宽度可调吗?
