@@ -604,8 +604,6 @@ endfunction
 " Function: GetVerilogLib
 " Input: 
 "   Lines look like: 
-"   verilog-library-directories:()
-"   verilog-library-directories-recursive:0
 "   verilog-library-flags:()
 " Description:
 " e.g
@@ -669,19 +667,6 @@ function s:GetVerilogLib()
     "Get library
     let lines = getline(1,line('$'))
     for line in lines
-        "verilog-library-directories
-        if line =~ 'verilog-library-directories\s*:\s*(.*)'
-            let dir = matchstr(line,'verilog-library-directories\s*:\s*(\zs.*\ze)')
-            call substitute(dir,'"\zs\S*\ze"','\=add(dirlist,submatch(0))','g')
-        endif
-
-        "verilog-library-directories-recursive
-        if line =~ 'verilog-library-directories-recursive\s*:'
-            let rec = matchstr(line,'verilog-library-directories-recursive\s*:\s*\zs\d\ze\s*$')
-            if rec != '0' && rec != '1'
-                echohl ErrorMsg | echo "Error input for verilog-library-directories-recursive = ".rec| echohl None
-            endif
-        endif
 
         "verilog-library-files
         if line =~ 'verilog-library-files\s*:\s*(.*)'

@@ -229,7 +229,7 @@ function! g:AutoInst(mode)
 
     while 1
         "Put cursor to /*autoinst*/ line
-        if search('\/\*autoinst\*\/','W') == 0
+        if search('\/\*autoinst\_.\{-}\*\/','W') == 0
             break
         endif
 
@@ -246,38 +246,86 @@ function! g:AutoInst(mode)
         let upd_io_list = s:GetInstIO(getline(line('.'),idx2))
         let chg_lines = getline(line('.'),idx2)
 
-        "Get io sequences {sequence : value}
-        if has_key(modules,module_name)
-            let file = modules[module_name]
-            let dir = files[file]
-            "read file
-            let lines = readfile(dir.'/'.file)
-            "reserve only module lines, in case of multiple module in same file
-            let lines = g:AutoVerilog_RsvModuleLine(lines,module_name)
-
-            "get add_dir by g:atv_crossdir_dirs e.g. F:/vim/test.v ->$VIM/test.v
-            if g:atv_autoinst_add_dir_keep == 1
-                for exp_dir in keys(g:atv_crossdir_dirs)
-                    if dir =~ escape(exp_dir,'\/')
-                        let dir = substitute(dir,escape(exp_dir,'\/'),g:atv_crossdir_dirs[exp_dir],'')
-                        break
-                    endif
-                endfor
+        "Get specified file path if it exists
+        let specified_file = ''
+        let match_str = matchstr(getline('.'), '\/\*autoinst\s\+\zs[^*]\{-}\ze\s*\*\/')
+        if match_str != ''
+            let specified_file = expand(match_str)
+            if specified_file !~ '^/\|^\w:'
+                let specified_file = simplify(expand('%:p:h') . '/' . specified_file)
             endif
-            let add_dir = dir.'/'.file
+            let specified_file = fnamemodify(specified_file, ':p')
+        endif
 
-            "io sequences
-            let io_seqs = g:AutoVerilog_GetIO(lines,'seq')
-            let io_names = g:AutoVerilog_GetIO(lines,'name')
-        else
-            echohl ErrorMsg | echo "No file with module name ".module_name." exist in cur dir ".getcwd() | echohl None
-            if a:mode == 1
-                continue
-            elseif a:mode == 0
-                return
+        "Get io sequences {sequence : value}
+        let read_success = 0
+        if specified_file != ''
+            if filereadable(specified_file)
+                let file = fnamemodify(specified_file, ':t')
+                let dir = fnamemodify(specified_file, ':h')
+                "read file
+                let lines = readfile(specified_file)
+                "reserve only module lines, in case of multiple module in same file
+                let lines = g:AutoVerilog_RsvModuleLine(lines,module_name)
+
+                "get add_dir by g:atv_crossdir_dirs e.g. F:/vim/test.v ->$VIM/test.v
+                if g:atv_autoinst_add_dir_keep == 1
+                    for exp_dir in keys(g:atv_crossdir_dirs)
+                        if dir =~ escape(exp_dir,'\/')
+                            let dir = substitute(dir,escape(exp_dir,'\/'),g:atv_crossdir_dirs[exp_dir],'')
+                            break
+                        endif
+                    endfor
+                endif
+                let add_dir = dir.'/'.file
+
+                "io sequences
+                let io_seqs = g:AutoVerilog_GetIO(lines,'seq')
+                let io_names = g:AutoVerilog_GetIO(lines,'name')
+                let read_success = 1
             else
-                echohl ErrorMsg | echo "Error input for AutoInst(),input mode = ".a:mode| echohl None
-                return
+                echohl ErrorMsg | echo "Specified file ".specified_file." is not readable or does not exist." | echohl None
+                if a:mode == 1
+                    continue
+                elseif a:mode == 0
+                    return
+                endif
+            endif
+        endif
+
+        if read_success == 0
+            if has_key(modules,module_name)
+                let file = modules[module_name]
+                let dir = files[file]
+                "read file
+                let lines = readfile(dir.'/'.file)
+                "reserve only module lines, in case of multiple module in same file
+                let lines = g:AutoVerilog_RsvModuleLine(lines,module_name)
+
+                "get add_dir by g:atv_crossdir_dirs e.g. F:/vim/test.v ->$VIM/test.v
+                if g:atv_autoinst_add_dir_keep == 1
+                    for exp_dir in keys(g:atv_crossdir_dirs)
+                        if dir =~ escape(exp_dir,'\/')
+                            let dir = substitute(dir,escape(exp_dir,'\/'),g:atv_crossdir_dirs[exp_dir],'')
+                            break
+                        endif
+                    endfor
+                endif
+                let add_dir = dir.'/'.file
+
+                "io sequences
+                let io_seqs = g:AutoVerilog_GetIO(lines,'seq')
+                let io_names = g:AutoVerilog_GetIO(lines,'name')
+            else
+                echohl ErrorMsg | echo "No file with module name ".module_name." exist in cur dir ".getcwd() | echohl None
+                if a:mode == 1
+                    continue
+                elseif a:mode == 0
+                    return
+                else
+                    echohl ErrorMsg | echo "Error input for AutoInst(),input mode = ".a:mode| echohl None
+                    return
+                endif
             endif
         endif
 
@@ -376,7 +424,7 @@ function! g:KillAutoInst(mode) abort
 
     while 1
         "Put cursor to /*autoinst*/ line
-        if search('\/\*autoinst\*\/','W') == 0
+        if search('\/\*autoinst\_.\{-}\*\/','W') == 0
             break
         endif
 
