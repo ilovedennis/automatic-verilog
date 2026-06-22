@@ -87,3 +87,12 @@
 1. Run `git rm --cached GEMINI.md`.
 2. Commit with the message: "Remove GEMINI.md from git control".
 3. Push changes to origin using `git push`.
+
+## Request / Opinions (2026-06-22 - Correct GEMINI.md Git Untracking)
+- The user requested to remove `GEMINI.md` from the remote repository on GitHub.
+- We modified `.gitignore` to correctly ignore `GEMINI.md` and untracked it using `git rm --cached GEMINI.md`.
+
+## Approved Plan (2026-06-22 - Correct GEMINI.md Git Untracking)
+1. Edit `.gitignore` to use standard glob patterns (`GEMINI.md`).
+2. Run `git rm --cached GEMINI.md`.
+3. Commit and push the changes.
