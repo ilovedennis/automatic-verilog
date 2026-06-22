@@ -49,3 +49,19 @@
 1. Stage all changes (including `plugin/automatic/autoinst.vim`, `plugin/automatic/crossdir.vim`, and `plan_history.md`).
 2. Commit with the message: "Add specific file path support to AutoInst and remove verilog-library-directories parsing".
 3. Push changes to origin using `git push`.
+
+## Request / Opinions (2026-06-22 - AutoInst trailing space fix)
+- The user reported that AutoInst does not work when using comments with spaces like `/*autoinst ../rtl/sib_a.v */`.
+- We discovered that trailing spaces inside the comment were captured in the path, causing file reading to fail.
+
+## Approved Plan (2026-06-22 - AutoInst trailing space fix)
+1. Modify [plugin/automatic/autoinst.vim](file:///home/dennis/github/automatic-verilog/plugin/automatic/autoinst.vim) around lines 251-253 to trim leading and trailing spaces from the captured file path.
+2. Verify the fix using a test in the scratch directory.
+
+## Request / Opinions (2026-06-22 - Commit trailing space fix)
+- The user approved staging, committing, and pushing the trailing space fix to GitHub.
+
+## Approved Plan (2026-06-22 - Commit trailing space fix)
+1. Stage all changes (including `plugin/automatic/autoinst.vim` and `plan_history.md`).
+2. Commit with the message: "Fix trailing space handling in AutoInst target path extraction".
+3. Push changes to origin using `git push`.

@@ -250,6 +250,7 @@ function! g:AutoInst(mode)
         let specified_file = ''
         let match_str = matchstr(getline('.'), '\/\*autoinst\s\+\zs[^*]\{-}\ze\s*\*\/')
         if match_str != ''
+            let match_str = substitute(match_str, '^\s*\(.\{-}\)\s*$', '\1', '')
             let specified_file = expand(match_str)
             if specified_file !~ '^/\|^\w:'
                 let specified_file = simplify(expand('%:p:h') . '/' . specified_file)
