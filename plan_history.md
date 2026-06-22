@@ -65,3 +65,25 @@
 1. Stage all changes (including `plugin/automatic/autoinst.vim` and `plan_history.md`).
 2. Commit with the message: "Fix trailing space handling in AutoInst target path extraction".
 3. Push changes to origin using `git push`.
+
+## Request / Opinions (2026-06-22 - Rewrite README.md)
+- The user requested to rewrite `README.md` to state that it's a fork, list the modified items, and explain how to use the functions.
+
+## Approved Plan (2026-06-22 - Rewrite README.md)
+1. Rewrite `README.md` with the new structure and content.
+
+## Request / Opinions (2026-06-22 - Commit README.md changes)
+- The user approved staging, committing, and pushing the rewritten README.md to GitHub.
+
+## Approved Plan (2026-06-22 - Commit README.md changes)
+1. Stage all changes (including `README.md` and `plan_history.md`).
+2. Commit with the message: "Rewrite README.md to describe fork, modifications, and usage".
+3. Push changes to origin using `git push`.
+
+## Request / Opinions (2026-06-22 - Untrack GEMINI.md)
+- The user requested to remove `GEMINI.md` from Git control.
+
+## Approved Plan (2026-06-22 - Untrack GEMINI.md)
+1. Run `git rm --cached GEMINI.md`.
+2. Commit with the message: "Remove GEMINI.md from git control".
+3. Push changes to origin using `git push`.
